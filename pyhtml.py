@@ -544,6 +544,16 @@ class style(Tag):
 class form(Tag):
     default_attributes = {'method': 'POST'}
 
+class safe_html(Tag):
+    safe = True
+
+    def __init__(self, html_str):
+        Tag.__init__(self, html_str)
+
+    def render(self, _out=None, _indent=0, **context):
+        if _out is None:
+            _out = StringIO()
+        return self._write_item(self.children[0], _out, context, _indent)
 
 def var(var):
     return lambda ctx: ctx.get(var)

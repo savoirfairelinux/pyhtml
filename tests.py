@@ -320,6 +320,13 @@ qwerty</pre>
         x['b'] = 'asdf', 123
         self.assertEqual(str(x), """<div>asdf123</div>""")
 
+    def test_safe_html(self):
+        # strings wrapped around safe_html() are rendered as unescaped strings
+        result = unicode(b(safe_html(u'<i>foobar</i>')))
+        expected = u'<b><i>foobar</i></b>'
+        self.assertEqual(result, expected)
+    
+
 
 if __name__ == "__main__":
     unittest.main()
